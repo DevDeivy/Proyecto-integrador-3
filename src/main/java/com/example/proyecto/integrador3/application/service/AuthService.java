@@ -2,6 +2,7 @@ package com.example.proyecto.integrador3.application.service;
 
 import com.example.proyecto.integrador3.adapter.input.web.dto.AuthRequestDTO;
 import com.example.proyecto.integrador3.adapter.input.web.dto.AuthResponseDTO;
+import com.example.proyecto.integrador3.adapter.input.web.dto.LoginRequestDTO;
 import com.example.proyecto.integrador3.adapter.output.persistence.entity.User;
 import com.example.proyecto.integrador3.adapter.output.persistence.repository.UserRepository;
 import com.example.proyecto.integrador3.domain.port.input.AuthUseCase;
@@ -36,18 +37,18 @@ public class AuthService implements AuthUseCase {
     }
 
     @Override
-    public AuthResponseDTO login(AuthRequestDTO request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        public AuthResponseDTO login(LoginRequestDTO request) {
+                User user = userRepository.findByEmail(request.getEmail())
+                        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                user.getUsername(),
+                                request.getPassword()
+                        )
+                );
 
-        String token = jwtService.generateToken(user);
-        return AuthResponseDTO.builder().token(token).build();
-    }
+                String token = jwtService.generateToken(user);
+                return AuthResponseDTO.builder().token(token).build();
+        }
 }

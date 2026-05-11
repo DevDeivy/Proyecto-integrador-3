@@ -2,6 +2,7 @@ package com.example.proyecto.integrador3.adapter.input.web.controllers;
 
 import com.example.proyecto.integrador3.adapter.input.web.dto.AuthRequestDTO;
 import com.example.proyecto.integrador3.adapter.input.web.dto.AuthResponseDTO;
+import com.example.proyecto.integrador3.adapter.input.web.dto.LoginRequestDTO;
 import com.example.proyecto.integrador3.domain.port.input.AuthUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody AuthRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         return ResponseEntity.ok(authUseCase.login(request));
     }
 }
