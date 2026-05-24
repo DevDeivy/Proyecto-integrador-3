@@ -20,4 +20,7 @@ public class AuthRequestDTO {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private String phone;
 }
