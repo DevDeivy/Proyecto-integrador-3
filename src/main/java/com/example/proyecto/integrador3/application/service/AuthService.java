@@ -24,31 +24,43 @@ public class AuthService implements AuthUseCase {
 
     @Override
     public AuthResponseDTO register(AuthRequestDTO request) {
+
         User user = User.builder()
                 .username(request.getUsername())
+                .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .phone(request.getPhone())
+                .state("ACTIVE")
                 .role("ROLE_USER")
                 .build();
 
         userRepository.save(user);
 
         String token = jwtService.generateToken(user);
-        return AuthResponseDTO.builder().token(token).build();
+
+        return AuthResponseDTO.builder()
+                .token(token)
+                .build();
     }
 
     @Override
-        public AuthResponseDTO login(LoginRequestDTO request) {
-                User user = userRepository.findByEmail(request.getEmail())
-                        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public AuthResponseDTO login(LoginRequestDTO request) {
 
-                authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(
-                                user.getUsername(),
-                                request.getPassword()
-                        )
-                );
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException("Usuario no encontrado"));
 
-                String token = jwtService.generateToken(user);
-                return AuthResponseDTO.builder().token(token).build();
-        }
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        String token = jwtService.generateToken(user);
+
+        return AuthResponseDTO.builder()
+                .token(token)
+                .build();
+    }
 }
