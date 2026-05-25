@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -20,10 +21,8 @@ public class IncidentRepositoryAdapter implements IncidentRepositoryPort {
 
     @Override
     public Incident save(Incident incident) {
-
         User user = userRepository.findById(incident.getUserId())
-                .orElseThrow(() ->
-                        new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         IncidentEntity entity = IncidentEntity.builder()
                 .title(incident.getTitle())
@@ -41,6 +40,18 @@ public class IncidentRepositoryAdapter implements IncidentRepositoryPort {
 
         IncidentEntity saved = jpaIncidentRepository.save(entity);
 
+        return mapToModel(saved);
+    }
+
+    @Override
+    public List<Incident> findAll() {
+        return jpaIncidentRepository.findAll()
+                .stream()
+                .map(this::mapToModel)
+                .toList();
+    }
+
+    private Incident mapToModel(IncidentEntity saved) {
         return Incident.builder()
                 .id(saved.getId())
                 .title(saved.getTitle())

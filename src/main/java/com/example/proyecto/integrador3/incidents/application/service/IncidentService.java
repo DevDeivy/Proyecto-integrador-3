@@ -6,7 +6,8 @@ import com.example.proyecto.integrador3.incidents.domain.ports.input.IncidentUse
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,10 @@ public class IncidentService implements IncidentUseCase {
     public Incident createIncident(Incident incident) {
 
         return incidentRepositoryPort.save(incident);
+    }
+
+    @Override
+    public List<Incident> getAllIncidents() {
+        return incidentRepositoryPort.findAll();
     }
 }

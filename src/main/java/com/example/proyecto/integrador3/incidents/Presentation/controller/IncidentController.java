@@ -6,13 +6,11 @@ import com.example.proyecto.integrador3.incidents.Presentation.dto.IncidentRespo
 import com.example.proyecto.integrador3.incidents.application.service.IncidentService;
 import com.example.proyecto.integrador3.incidents.domain.model.Incident;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/incidents")
@@ -26,7 +24,6 @@ public class IncidentController {
             @RequestBody IncidentRequest request,
             Authentication authentication
     ) {
-
         User user = (User) authentication.getPrincipal();
 
         Incident incident = Incident.builder()
@@ -39,8 +36,7 @@ public class IncidentController {
                 .userId(user.getId())
                 .build();
 
-        Incident saved =
-                incidentService.createIncident(incident);
+        Incident saved = incidentService.createIncident(incident);
 
         return ResponseEntity.ok(
                 IncidentResponse.builder()
@@ -51,5 +47,21 @@ public class IncidentController {
                         .deadline(saved.getDeadline())
                         .build()
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<List<IncidentResponse>> getAll() {
+        List<IncidentResponse> response = incidentService.getAllIncidents()
+                .stream()
+                .map(i -> IncidentResponse.builder()
+                        .id(i.getId())
+                        .title(i.getTitle())
+                        .description(i.getDescription())
+                        .date(i.getDate())
+                        .deadline(i.getDeadline())
+                        .build())
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 }
