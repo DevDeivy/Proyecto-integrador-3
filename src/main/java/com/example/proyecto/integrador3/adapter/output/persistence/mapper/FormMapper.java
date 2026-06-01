@@ -23,7 +23,7 @@ public class FormMapper {
         form.setTypeRequest(formRequestDTO.getTypeRequest());
         form.setSection(formRequestDTO.getSection());
         form.setDescription(formRequestDTO.getDescription());
-        form.setPriority(form.getPriority());
+        form.setPriority(formRequestDTO.getPriority());
         form.setCategory(formRequestDTO.getCategory());
         return form;
     }
