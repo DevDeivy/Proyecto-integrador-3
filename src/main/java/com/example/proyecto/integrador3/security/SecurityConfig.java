@@ -72,7 +72,7 @@ public class SecurityConfig {
                 "http://localhost:8080",
                 "http://localhost:8081",
                 "http://localhost:5173",
-                "https://proyecto-integrador-3-hh2h.onrender.com/"
+                "https://proyecto-integrador-3-i4cy.onrender.com"
         ));
 
         configuration.setAllowedMethods(List.of(
