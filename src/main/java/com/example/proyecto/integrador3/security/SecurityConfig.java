@@ -71,9 +71,8 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:8080",
-                "http://localhost:8081",
                 "http://localhost:5173",
-                "https://proyecto-integrador-3-i4cy.onrender.com"
+                "https://ciudadreporta.vercel.app"
         ));
 
         configuration.setAllowedMethods(List.of(
