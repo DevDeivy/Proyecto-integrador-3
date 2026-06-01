@@ -5,6 +5,7 @@ import com.example.proyecto.integrador3.adapter.input.web.dto.FormResponseDTO;
 import com.example.proyecto.integrador3.adapter.output.persistence.entity.Form;
 import com.example.proyecto.integrador3.adapter.output.persistence.mapper.FormMapper;
 import com.example.proyecto.integrador3.adapter.output.persistence.repository.FormRepository;
+import com.example.proyecto.integrador3.domain.port.input.CreateFormUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FormService {
+public class FormService implements CreateFormUseCase {
     private final FormRepository formRepository;
     private final FormMapper formMapper;
 
