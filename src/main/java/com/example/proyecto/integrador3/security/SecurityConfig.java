@@ -70,7 +70,9 @@ public class SecurityConfig {
 
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:8080",
-                "http://localhost:5173"
+                "http://localhost:8081",
+                "http://localhost:5173",
+                "https://proyecto-integrador-3-hh2h.onrender.com/"
         ));
 
         configuration.setAllowedMethods(List.of(
