@@ -1,15 +1,10 @@
 package com.example.proyecto.integrador3.incidents.infrastructure.entity;
 
 import com.example.proyecto.integrador3.adapter.output.persistence.entity.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.example.proyecto.integrador3.incidents.enums.IncidentCategory;
+import com.example.proyecto.integrador3.incidents.enums.IncidentPriority;
+import com.example.proyecto.integrador3.incidents.enums.IncidentState;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,25 +30,34 @@ public class IncidentEntity {
     @Column(nullable = false, length = 500)
     private String description;
 
+    @Column(nullable = false)
     private LocalDate date;
 
+    @Column(nullable = false)
     private LocalDate deadline;
 
     @Column(name = "resolution_date")
     private LocalDate resolutionDate;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", nullable = false)
     private LocalDate updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String categoryId;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private IncidentCategory category;
 
-    private String stateId;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private IncidentState state;
 
-    private String addressId;
+    @Column(name = "address", nullable = false)
+    private String address;
 
-    private String priorityId;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private IncidentPriority priority;
 }
