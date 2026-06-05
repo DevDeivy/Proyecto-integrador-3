@@ -1,19 +1,26 @@
 package com.example.proyecto.integrador3.incidents.Presentation.dto;
 
+import com.example.proyecto.integrador3.incidents.enums.IncidentCategory;
+import com.example.proyecto.integrador3.incidents.enums.IncidentPriority;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
 public class IncidentRequest {
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String description;
 
-    private String categoryId;
+    @NotNull
+    private IncidentCategory category;
 
-    private String stateId;
+    @NotBlank
+    private String address;
 
-    private String addressId;
-
-    private String priorityId;
+    @NotNull
+    private IncidentPriority priority;
 }

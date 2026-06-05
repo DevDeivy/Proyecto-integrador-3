@@ -1,5 +1,8 @@
 package com.example.proyecto.integrador3.incidents.domain.model;
 
+import com.example.proyecto.integrador3.incidents.enums.IncidentCategory;
+import com.example.proyecto.integrador3.incidents.enums.IncidentPriority;
+import com.example.proyecto.integrador3.incidents.enums.IncidentState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,28 +15,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class Incident {
-
     private Long id;
-
     private String title;
-
     private String description;
-
     private LocalDate date;
-
     private LocalDate deadline;
-
     private LocalDate resolutionDate;
-
     private LocalDate updatedAt;
-
     private Long userId;
-
-    private String categoryId;
-
-    private String stateId;
-
-    private String addressId;
-
-    private String priorityId;
+    private IncidentCategory category;
+    private IncidentState state;
+    private String address;
+    private IncidentPriority priority;
 }
