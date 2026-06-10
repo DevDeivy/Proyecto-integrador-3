@@ -17,9 +17,10 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
         config.setAllowedOrigins(List.of(
-                "http://localhost:5173",
-                "https://ciudadreporta.vercel.app"
-        ));
+    "http://localhost:5173",
+    "http://localhost:8080",
+    "https://ciudadreporta.vercel.app"
+    ));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(List.of("*"));
 
