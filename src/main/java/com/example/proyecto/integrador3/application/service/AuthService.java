@@ -23,7 +23,7 @@ public class AuthService implements AuthUseCase {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthResponseDTO register(AuthRequestDTO request) {
+        public AuthResponseDTO register(AuthRequestDTO request) {
 
         User user = User.builder()
                 .username(request.getUsername())
@@ -43,24 +43,22 @@ public class AuthService implements AuthUseCase {
                 .build();
     }
 
-    @Override
-    public AuthResponseDTO login(LoginRequestDTO request) {
-
+   @Override
+        public AuthResponseDTO login(LoginRequestDTO request) {
+                
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() ->
-                        new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        user.getUsername(),
                         request.getPassword()
                 )
         );
 
         String token = jwtService.generateToken(user);
-
         return AuthResponseDTO.builder()
                 .token(token)
                 .build();
-    }
+        }
 }
